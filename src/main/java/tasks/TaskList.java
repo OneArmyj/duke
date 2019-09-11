@@ -39,40 +39,6 @@ public class TaskList {
     }
 
     /**
-     * A method to process the data of previous taskings, and add them to the
-     * current TaskList.
-     * @param list List of Task to be updated.
-     * @param content Data to be processed.
-     */
-    private void integrateList(ArrayList<Task> list, String content) {
-        Scanner s = new Scanner(content);
-        while (s.hasNextLine()) {
-            String text = s.nextLine();
-            String[] itemArr = text.split(" [|] ");
-            switch (itemArr[0]) {
-            case "T":
-                xs.add(new ToDos(itemArr[2], itemArr[1]));
-                numOfTasks++;
-                break;
-
-            case "D":
-                xs.add(new Deadlines(itemArr[2], itemArr[1], itemArr[3]));
-                numOfTasks++;
-                break;
-
-            case "E":
-                xs.add(new Event(itemArr[2], itemArr[1], itemArr[3]));
-                numOfTasks++;
-                break;
-
-            default:
-                break;
-            }
-        }
-        s.close();
-    }
-
-    /**
      * A method to return the number of Task that exist in TaskList.
      * @return Returns the number of Task.
      */
@@ -100,6 +66,7 @@ public class TaskList {
             }
         }
         numOfTasks++;
+        assert numOfTasks >= 1 : "Task started from a negative value";
         xs.add(t);
         return String.format("Got it. I've added this task:\n%s\nNow you have %d tasks in the list.", t, numOfTasks);
     }
@@ -121,6 +88,7 @@ public class TaskList {
      */
     public String removeTask(int num) {
         numOfTasks--;
+        assert numOfTasks >= 0 : " Negative task numbers found";
         Task t = xs.get(num - 1);
         xs.remove(num - 1);
         return String.format("Noted. I've removed this task:\n%s\nNow you have %d tasks in the list.", t, numOfTasks);
@@ -149,8 +117,6 @@ public class TaskList {
         }
         return sb.toString();
     }
-<<<<<<< Updated upstream
-=======
 
     /**
      * A method to process the data of previous tasking, and add them to the
@@ -184,5 +150,5 @@ public class TaskList {
         }
         s.close();
     }
->>>>>>> Stashed changes
 }
+
